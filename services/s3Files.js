@@ -6,13 +6,25 @@ var config = require('../config');
 
 exports.getOrderDocument = (id, documentName, extension) => {
     return new Promise((resolve, reject) => {
+
+        // Aws rejects queries with parameters that aren't expected.
         let params = {
             Bucket: config.dev.aws.Bucket,
             Key: `${config.dev.aws.subPath}/${id}/${documentName}${id}.${extension}`
         };
+
         s3.getObject(params, (err, data) => {
             if (err) { reject(err); }
             else { resolve({file: data.Body, extension}); }
         });
     });
 };
+
+// exports.getZPL = (id) => {
+//     return new Promise((resolve, reject) => {
+//         let params = {
+//             Bucket: config.dev.aws.Bucket,
+//             Key: `${config.dev.aws.subPath}/${id}/${documentName}${id}.${extension}`
+//         };
+//     });
+// };
