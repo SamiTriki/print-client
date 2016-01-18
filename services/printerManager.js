@@ -5,6 +5,7 @@ var printer = require('printer');
 var _ = require('lodash');
 
 exports.printFile = (lptDocument) => {
+    console.log(lptDocument);
     return new Promise((resolve, reject) => {
         printer.printDirect({
             data: lptDocument.file,

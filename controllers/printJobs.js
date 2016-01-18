@@ -1,12 +1,12 @@
 "use strict";
 require('dotenv').load();
 
-var s3 = require('../services/s3files');
+var s3 = require('../services/s3');
 var printer = require('../services/printerManager');
 
-exports.printFile = (id, documentName, extension) => {
+exports.printFile = (path) => {
     return new Promise((resolve, reject) => {
-        s3.getOrderDocument(id, documentName, extension)
+        s3.getOrderDocument(path)
             .then((lptDocument) => {
                 printer.printFile(lptDocument)
                 .then(id => resolve(id))
@@ -26,5 +26,5 @@ exports.printFile = (id, documentName, extension) => {
 // };
 
 //test
-exports.test = () => exports.printFile('105280', 'commande_fabrication_', 'pdf');
+exports.test = () => exports.printFile('paris1/105280/commande_fabrication_105280.pdf');
 
