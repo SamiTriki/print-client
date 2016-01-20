@@ -28,3 +28,5 @@ templates.js
 .idea
 
 .env
+
+test.js
