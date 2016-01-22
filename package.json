@@ -20,6 +20,7 @@
     "dotenv": "^1.2.0",
     "lodash": "^3.10.1",
     "pdfkit": "^0.7.2",
-    "printer": "^0.2.1"
+    "printer": "^0.2.1",
+    "scissors": "^0.1.0"
   }
 }
