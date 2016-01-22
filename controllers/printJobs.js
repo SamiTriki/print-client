@@ -1,8 +1,8 @@
 "use strict";
 require('dotenv').load();
 
-var s3 = require('../services/s3');
-var printer = require('../services/printerManager');
+var s3 = require('../managers/s3');
+var printer = require('../managers/printer-manager');
 
 exports.printFile = (path) => {
     return new Promise((resolve, reject) => {

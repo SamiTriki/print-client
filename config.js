@@ -5,8 +5,8 @@ module.exports = {
             subPath: 'paris1'
         },
         printers: {
-            invoice: 'Simulated_Color_Laser___sami_mbp',
-            label: 'Simulated_Label_Printer___sami_mbp'
+            invoice: 'intermec',
+            label: 'intermec'
         }
     },
     prod: {
