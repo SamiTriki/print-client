@@ -17,6 +17,7 @@
   "dependencies": {
     "aws-sdk": "^2.2.30",
     "barcode": "^0.1.0",
+    "del": "^2.2.0",
     "dotenv": "^1.2.0",
     "lodash": "^3.10.1",
     "pdfkit": "^0.7.2",

@@ -1,8 +1,8 @@
 "use strict";
 
 var config = require('../config');
-var aws = require ('aws-sdk');
-var s3 = new aws.S3();
+const aws = require ('aws-sdk');
+const s3 = new aws.S3();
 
 exports.getOrderDocument = (path) => {
     return new Promise((resolve, reject) => {

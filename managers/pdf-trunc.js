@@ -1,12 +1,20 @@
 "use strict";
 
-var scissors = require('scissors');
-var fs = require('fs');
-var filename = "./chronoposttomodify.pdf";
-let left = 500, bottom = 490, right = 500, top = 1000;
+const exec = require('child_process').exec;
+const del = require('del');
 
-var pdf = scissors(filename)
-    .crop(left,bottom, right, top);
-//1 plus large. 2: jss ap
-pdf.pdfStream().pipe(fs.createWriteStream(`./xmodified_l${left}b${bottom}r${right}t${top}.pdf`));
-
+// crops a file, deletes it and returns the new file
+exports.crop = (path, filename) => {
+    return new Promise((resolve, reject) => {
+        exec(`pdfcrop ${path + filename} --margins "-490 -67 0 -62" ${path}cropped_${filename}`,
+        (err, stdout) => {
+            if (!err && stdout.includes('written')) {
+                del(path + filename);
+                resolve(`${path}cropped_${filename}`);
+            } else {
+                del(path + filename);
+                reject(err);
+            }
+        });
+    });
+};
