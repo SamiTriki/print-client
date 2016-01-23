@@ -4,6 +4,8 @@ var config = require('../config');
 const aws = require ('aws-sdk');
 const s3 = new aws.S3();
 
+// @param {string} path: full path to the document
+// @return {promise} => lptDocument: object containing the file buffer + extension
 exports.getOrderDocument = (path) => {
     return new Promise((resolve, reject) => {
 
@@ -24,12 +26,3 @@ exports.getOrderDocument = (path) => {
         });
     });
 };
-
-// exports.getZPL = (id) => {
-//     return new Promise((resolve, reject) => {
-//         let params = {
-//             Bucket: config.dev.aws.Bucket,
-//             Key: `${config.dev.aws.subPath}/${id}/${documentName}${id}.${extension}`
-//         };
-//     });
-// };
