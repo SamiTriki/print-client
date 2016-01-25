@@ -2,8 +2,8 @@
 "use strict";
 const pdf = require('pdfkit');
 const exec = require('child_process').exec;
-const del = require('del');
 const fs = require('fs');
+const moment = require('moment');
 var barcode = require('./barcode-manager');
 
 // generates a certified label
@@ -12,36 +12,40 @@ var barcode = require('./barcode-manager');
 // @param {string} last_name: last name of the customer
 // @param {string} user: name of the operator
 // @return {promise} => path: full path to the generated label
-exports.certified = (order_id) => {
+exports.certified = (order_id, first_name, last_name, user) => {
     return new Promise((resolve, reject) => {
-        let doc = new pdf({
-            size: [140.00, 140.00],
-            layout: 'portrait',
-            margins: {
-                top:50,
-                left:5,
-                right:5,
-                bottom:5
-            },
-            fontSize: 8
-        });
-
         barcode.img(order_id)
         .then((barcode_path) => {
+            let doc = new pdf({
+                size: [140.00, 140.00],
+                layout: 'portrait',
+                margins: {
+                    top:43,
+                    left:0,
+                    right:0,
+                    bottom: 0
+                }
+            });
+            let now = moment().locale('fr').format("lll");
+            let writeStream = fs.createWriteStream(`${__dirname}/tmp/${order_id}_label.pdf`);
 
-            let writeStream = fs.createWriteStream(`./tmp/${order_id}_label.pdf`);
+            writeStream.on('finish', () => resolve(`${__dirname}/tmp/${order_id}_label.pdf`));
+            writeStream.on('error', (err) => reject(`error while creating label pdf: ${err}`));
 
-            writeStream.on('finish', () => resolve(`./tmp/${order_id}_label.pdf`));
+            doc.fontSize(10)
+            .text(`${first_name} ${last_name}`, {align: "center", ellipsis: true})
+            .text(order_id, {align: "center"})
+            .image(barcode_path, {fit: [140.00, 140.00]})
+            .moveDown(1/3)
+            .text(`${now}`, {align: "center"})
+            .fontSize(8)
+            .text(`par ${user}`, {align: "center"})
+            .end();
+
             doc.pipe(writeStream);
 
-            doc.text('Sami Triki', {align: "center"});
-            doc.text('90304', {align: "center"});
-            doc.image(barcode_path, {fit: [140.00, 140.00]});
-            doc.moveDown(1/2);
-            doc.text("Le 28/01/1994 à 10:23", {align: "center"});
-            doc.end();
         })
-        .catch((e) => reject(e));
+        .catch((e) => reject('error while getting barcode image' + e));
     });
 };
 
@@ -49,13 +53,13 @@ exports.certified = (order_id) => {
 // /!\ executes an external process, "pdfcrop must be installed on the system"
 // @param {string} path: path of the directory containing the file
 // @param {string} filename: name of the file
-// @return {primise} => path: full path to the cropped pdf
+// @return {promise} => path: full path to the cropped pdf
 exports.crop = (path, filename) => {
+    //TODO: clean file in file manager
     return new Promise((resolve, reject) => {
         exec(`pdfcrop ${path + filename} --margins "-490 -67 0 -62" ${path}cropped_${filename}`,
         (err, stdout) => {
             if (!err && stdout.includes('written')) {
-                del(path + filename);
                 resolve(`${path}cropped_${filename}`);
             } else {
                 reject(err);
