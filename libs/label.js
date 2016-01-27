@@ -23,7 +23,7 @@ function ConformityLabel (labelInfo, barcode_path) {
     // writes the base comformity label with customer name, order id, barcode and date
     self.label
     .fontSize(10)
-    .text(`${labelInfo.first_name} ${labelInfo.last_name}`, {align: "center", ellipsis: true})
+    .text(labelInfo.customer_name, {align: "center", ellipsis: true})
     .text(labelInfo.order_id, {align: "center"})
     .image(barcode_path, { fit:[120, 20], align: 'center', x: 10})
     .moveDown(1/3)
@@ -32,7 +32,7 @@ function ConformityLabel (labelInfo, barcode_path) {
 
     self.certified = () => {
         self.label
-        .text(`par ${labelInfo.user}`, {align: "center"})
+        .text(`par ${labelInfo.manufacturer_name}`, {align: "center"})
         .moveDown(5)
         .text(`montage: ${labelInfo.manufacturing}`, {align: "left"})
         .text(`destination: ${labelInfo.destination}`, {align: "left"});
@@ -42,7 +42,7 @@ function ConformityLabel (labelInfo, barcode_path) {
         self.label
         .text(`NC: ${labelInfo.reason}`, {align: "left"})
         .moveDown(5)
-        .text(`par: ${labelInfo.user}`, {align: "left"})
+        .text(`par: ${labelInfo.manufacturer_name}`, {align: "left"})
         .text(`montage: ${labelInfo.manufacturing}`, {align: "left"});
     };
 
