@@ -22,15 +22,17 @@ exports.printFile = (req, res, next) => {
 };
 
 exports.label = (req, res, next) => {
+    if (!req.body) {next(new Error('You request needs a body'));}
     // nodejs doesn't support default parameters yet
-    let order_id = req.query.order_id || 1234567891011;
-    let first_name = req.query.first_name || 'Jean';
-    let last_name = req.query.last_name || 'Dupont';
-    let user = req.query.user || 'Prosper';
-    let reason = req.query.raison || 'Problème de péniche';
-    let type = req.query.type || 'not_certified';
-    let manufacturing = req.query.manufacturing || 'Atelier Paris';
-    let destination = req.query.destination || 'Magasin Paris';
+    req.body = JSON.parse(req.body);
+    let order_id = req.body.order_id || 1234567891011;
+    let first_name = req.body.first_name || 'Jean';
+    let last_name = req.body.last_name || 'Dupont';
+    let user = req.body.user || 'Prosper';
+    let reason = req.body.raison || 'Problème de péniche';
+    let type = req.body.type || 'not_certified';
+    let manufacturing = req.body.manufacturing || 'Atelier Paris';
+    let destination = req.body.destination || 'Magasin Paris';
 
     pdf.label({order_id, first_name, last_name, user, type, reason, destination, manufacturing})
     .then((label_path) => {
