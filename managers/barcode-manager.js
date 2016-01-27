@@ -1,35 +1,27 @@
 "use strict";
 
-const barcode = require('barcode');
-const path = require('path');
-
+const barcode = require('rescode');
+const fs = require('fs');
+const outputDir = require('../config.js').dev.tempFiles;
 // creates an EAN13 barcore from an order id
 // @param {int} order_id: id of the order, has to be converted to string for barcode generation
 // @return {promise} => barcode_path: path to the barcode image
 exports.img = (order_id) => {
     return new Promise((resolve, reject) => {
+        let outfile = `${outputDir}/${order_id}_barcode.png`;
 
-        var outfile = path.join(__dirname, `/tmp/${order_id}_barcode.png`);
+        try {
+            // Sequence is important
+            barcode.loadModules(["ean2", "ean5", "ean8", "ean13"], {"includetext": false, "scaleX":5});
+        } catch (e) {
+            reject(`Barcode library error`);
+        }
 
-        let ean_13 = barcode('ean13', {
-            data: order_id.toString(),
-            width: 150,
-            height: 20
+        let image = barcode.create("ean13", order_id.toString());
+
+        fs.writeFile(outfile, image, (err) => {
+            if (err) {reject(`error while writing barcode to disk ${err}`);}
+            resolve(outfile);
         });
-        let attempts = 0;
-        let saveImage = () => {
-            ean_13.saveImage(outfile, function(err) {
-                if (err && attempts < 3) {
-                    setTimeout(saveImage, 100);
-                    attempts++;
-                } else if (err && attempts > 3) {
-                    reject('error while creating the barcode');
-                } else {
-                    resolve(outfile);
-                }
-            });
-        };
-
-        saveImage();
     });
 };

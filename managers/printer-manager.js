@@ -9,7 +9,6 @@ const fs = require('fs');
 // @param {object} lptDocument - {file: file_bugger, extension: string}
 // @return {promise} => id of the current job
 exports.file = (lptDocument) => {
-    console.log(lptDocument);
     return new Promise((resolve, reject) => {
         printer.printDirect({
             data: lptDocument.file,
@@ -27,10 +26,8 @@ exports.file = (lptDocument) => {
 exports.label = (label_path) => {
     return new Promise((resolve, reject) => {
         fs.readFile(label_path, function(err, data){
-            if(err) {
-                console.error('err:' + err);
-                return;
-            }
+            if(err) { reject(err); }
+
             printer.printDirect({
                 data: data,
                 type: "PDF",

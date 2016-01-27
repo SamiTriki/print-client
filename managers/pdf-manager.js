@@ -1,49 +1,32 @@
 //lib to generate a pdf for glasses-verification
 "use strict";
-const pdf = require('pdfkit');
 const exec = require('child_process').exec;
-const fs = require('fs');
-const moment = require('moment');
 var barcode = require('./barcode-manager');
+const Label = require("../libs/label");
 
 // generates a certified label
-// @param {int} order_id
-// @param {string} first_name: first name of the customer
-// @param {string} last_name: last name of the customer
-// @param {string} user: name of the operator
+// @param {object} labelInfo: contains the description of the label withing the following
+// -- @param {int} order_id
+// -- @param {string} first_name: first name of the customer
+// -- @param {string} last_name: last name of the customer
+// -- @param {string} user: name of the operator
+// -- @param {string} reason: reason for the problem on manufacturing
+// -- @param {string} type: type of label wanted within [certified, not_certified... others to come]
+// -- @param {string} manufacturing: place where order is made
+// -- @param {string} destination: place where to send order
 // @return {promise} => path: full path to the generated label
-exports.certified = (order_id, first_name, last_name, user) => {
+
+exports.label = (labelInfo) => {
     return new Promise((resolve, reject) => {
-        barcode.img(order_id)
+        barcode.img(labelInfo.order_id)
         .then((barcode_path) => {
-            let doc = new pdf({
-                size: [140.00, 140.00],
-                layout: 'portrait',
-                margins: {
-                    top:43,
-                    left:0,
-                    right:0,
-                    bottom: 0
-                }
-            });
-            let now = moment().locale('fr').format("lll");
-            let writeStream = fs.createWriteStream(`${__dirname}/tmp/${order_id}_label.pdf`);
-
-            writeStream.on('finish', () => resolve(`${__dirname}/tmp/${order_id}_label.pdf`));
-            writeStream.on('error', (err) => reject(`error while creating label pdf: ${err}`));
-
-            doc.fontSize(10)
-            .text(`${first_name} ${last_name}`, {align: "center", ellipsis: true})
-            .text(order_id, {align: "center"})
-            .image(barcode_path, {fit: [140.00, 140.00]})
-            .moveDown(1/3)
-            .text(`${now}`, {align: "center"})
-            .fontSize(8)
-            .text(`par ${user}`, {align: "center"})
-            .end();
-
-            doc.pipe(writeStream);
-
+            try {
+                let label = new Label(labelInfo, barcode_path);
+                label.output()
+                .then((pdfLabel) => resolve(pdfLabel));
+            } catch (e) {
+                reject(e);
+            }
         })
         .catch((e) => reject('error while getting barcode image' + e));
     });

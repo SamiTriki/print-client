@@ -5,9 +5,11 @@ module.exports = {
             subPath: 'paris1'
         },
         printers: {
-            invoice: 'intermec',
+            invoice: 'invoice_simulator',
+            // label: 'intermec'
             label: 'intermec'
-        }
+        },
+        tempFiles: `${__dirname}/tmp`
     },
     prod: {
         aws: {
