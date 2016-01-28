@@ -6,7 +6,7 @@ const default_config = require('../config/default_config');
 var fs = require('fs');
 
 exports.set = (type, prop, value, cb) => {
-    let config = exports.get();
+    let config = exports.getSync();
     if (config[type] && config[type][prop]) {
         config[type][prop] = value;
     } else if (config[type]) {

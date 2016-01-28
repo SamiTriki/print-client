@@ -46,17 +46,22 @@ exports.getStatus = () => {
 exports.check = () => {
     return new Promise((resolve, reject) => {
         try {
-            exports.getStatus()
-            .then((status) => {
-                require('child_process').exec('git log -n 1 origin/master', (err, t) => {
-                    if (err) { reject(err); }
-                    // check if remote last commit and local one matches
-                    resolve((status.version !== t.split(" ")[1].replace('\nAuthor:', '').trim()));
-                });
-            });
 
+            let checkStatus = () => {
+                exports.getStatus()
+                .then((status) => {
+                    require('child_process').exec('git log -n 1 origin/master', (err, t) => {
+                        if (err) { reject(err); }
+                        // check if remote last commit and local one matches
+                        resolve((status.version !== t.split(" ")[1].replace('\nAuthor:', '').trim()));
+                    });
+                });
+            };
+
+            git.fetch(() => checkStatus());
         } catch (e) {
-            resolve(new Error(`Could not check the status update`));
+            reject(new Error(`Could not check the status update`));
         }
     });
 };
+
