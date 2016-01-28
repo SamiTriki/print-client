@@ -7,5 +7,6 @@ module.exports = {
         invoice: 'Brother_MFC-9460CDN',
         label: 'intermec'
     },
-    tempFiles: `${__dirname}/../tmp`
+    tempFiles: `${__dirname}/../tmp`,
+    logs_path: `${__dirname}/../`
 };

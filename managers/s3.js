@@ -8,6 +8,7 @@ const s3 = new aws.S3();
 exports.getOrderDocument = (path) => {
     let config = require('./configuration-manager').getSync();
     return new Promise((resolve, reject) => {
+        if (!path) { reject(new Error(`Please provide the path to the file`)); }
 
         // Aws rejects queries with parameters that aren't expected.
         let params = {

@@ -3,7 +3,7 @@
 const barcode = require('rescode');
 const fs = require('fs');
 
-// creates an EAN13 barcore from an order id
+// creates an EAN13 barcode from an order id
 // @param {int} order_id: id of the order, has to be converted to string for barcode generation
 // @return {promise} => barcode_path: path to the barcode image
 exports.img = (order_id) => {
