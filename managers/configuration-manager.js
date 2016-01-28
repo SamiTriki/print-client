@@ -37,6 +37,15 @@ exports.get = (cb) => {
     }
 };
 
+exports.getSync = () => {
+    try {
+        return JSON.parse(fs.readFileSync(config_file_path));
+    } catch (e) {
+        save(default_config);
+        return default_config;
+    }
+};
+
 exports.reset = (cb) => {
     try {
         exports.replace(default_config, () => cb(null, default_config));

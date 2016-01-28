@@ -7,10 +7,9 @@ const fs = require('fs');
 // @param {int} order_id: id of the order, has to be converted to string for barcode generation
 // @return {promise} => barcode_path: path to the barcode image
 exports.img = (order_id) => {
-    let outputDir = require('./configuration-manager').get().tempFiles;
+    let outputDir = require('./configuration-manager').getSync().tempFiles;
     return new Promise((resolve, reject) => {
         let outfile = `${outputDir}/${order_id}_barcode.png`;
-
         try {
             // Sequence is important
             barcode.loadModules(["ean2", "ean5", "ean8", "ean13"], {"includetext": false, "scaleX":5});

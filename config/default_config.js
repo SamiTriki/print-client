@@ -8,5 +8,5 @@ module.exports = {
         // label: 'intermec'
         label: 'intermec'
     },
-    tempFiles: `${__dirname}/tmp`
+    tempFiles: `${__dirname}/../tmp`
 };

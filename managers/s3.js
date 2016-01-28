@@ -6,12 +6,12 @@ const s3 = new aws.S3();
 // @param {string} path: full path to the document
 // @return {promise} => lptDocument: object containing the file buffer + extension
 exports.getOrderDocument = (path) => {
-    let config = require('./configuration-manager').get();
+    let config = require('./configuration-manager').getSync();
     return new Promise((resolve, reject) => {
 
         // Aws rejects queries with parameters that aren't expected.
         let params = {
-            Bucket: config.dev.aws.Bucket,
+            Bucket: config.aws.Bucket,
             Key: path
         };
         s3.getObject(params, (err, data) => {

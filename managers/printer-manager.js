@@ -7,12 +7,12 @@ const fs = require('fs');
 // @param {object} lptDocument - {file: file_bugger, extension: string}
 // @return {promise} => id of the current job
 exports.file = (lptDocument) => {
-    let config = require('./configuration-manager').get();
+    let config = require('./configuration-manager').getSync();
     return new Promise((resolve, reject) => {
         printer.printDirect({
             data: lptDocument.file,
             type: lptDocument.extension.toUpperCase(),
-            printer: config.dev.printers.invoice,
+            printer: config.printers.invoice,
             success: (id) => resolve(id),
             error: (err) => reject(err)
         });
@@ -23,7 +23,7 @@ exports.file = (lptDocument) => {
 // @param {string} label_path: full path to the generated file
 // @return {promise} => id of the current job
 exports.label = (label_path) => {
-    let config = require('./configuration-manager').get();
+    let config = require('./configuration-manager').getSync();
     return new Promise((resolve, reject) => {
         fs.readFile(label_path, function(err, data){
             if(err) { reject(err); }
@@ -31,7 +31,7 @@ exports.label = (label_path) => {
             printer.printDirect({
                 data: data,
                 type: "PDF",
-                printer: config.dev.printers.label,
+                printer: config.printers.label,
                 success: (id) => resolve(id),
                 error: (err) => reject(err)
             });

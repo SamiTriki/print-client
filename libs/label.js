@@ -5,7 +5,7 @@ const fs = require('fs');
 
 function ConformityLabel (labelInfo, barcode_path) {
     let self = this;
-    let outputDir = require('../managers/configuration-manager').get().tempFiles;
+    let outputDir = require('../managers/configuration-manager').getSync().tempFiles;
 
     let now = moment().locale('fr').format("lll");
 
