@@ -11,7 +11,7 @@ exports.printFile = (req, res, next) => {
     .then((lptDocument) => {
         printer.file(lptDocument)
         .then(id => {
-            res.send(id, 200);
+            res.send(200, id);
             next();
         })
         .catch((err) => next(err));
@@ -26,7 +26,7 @@ exports.label = (req, res, next) => {
     .then((label_path) => {
         printer.label(label_path)
         .then((id) => {
-            res.send(id, 200);
+            res.send(200, id);
             next();
         })
         .catch((err) => next(err));
