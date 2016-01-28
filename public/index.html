@@ -34,17 +34,36 @@
 
         <div class="container">
 
-            <div style="padding-top: 10px;">
-                <div class="btn btn-primary" id="certified">
-                    Imprimer étiquette certifiée
+            <div class="row">
+                <div class="col-xs-12" style="padding-top: 20px";>
+                    <h3 class="test">Tests:</h3>
+                    <div class="btn btn-primary" id="certified">
+                        Imprimer étiquette certifiée
+                    </div>
+                    <div class="btn btn-primary" id="not_certified">
+                        Imprimer étiquette non certifiée
+                    </div>
                 </div>
-                <div class="btn btn-primary" id="not_certified">
-                    Imprimer étiquette non certifiée
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="version">Infos:</h3>
+                    <div id="version-version_info">
+                        <p>mise à jour n° <span id="version-total_releases"></span></p>
+                        <p><span id="version-date"></span> par <span id="version-author"></span></p>
+
+                        <p >Notes: <span id="version-release_note"></span></p>
+                        <p>hash version n°:
+                            <span id="version-version">
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
         </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.1/lodash.js"></script>
     <script src="./ui.js"></script>
     <script src="./api.js"></script>
     <script src="./script.js"></script>
