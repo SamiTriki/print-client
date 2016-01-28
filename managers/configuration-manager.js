@@ -25,14 +25,14 @@ exports.replace = (newConfig, cb) => {
     }
 };
 
-exports.get = () => {
+exports.get = (cb) => {
     try {
         // if file exists.
-        return JSON.parse(fs.readFileSync(config_file_path));
+        cb(JSON.parse(fs.readFileSync(config_file_path)));
     } catch (e) {
         // if no config file, save and return default
         save(default_config,() => {
-            return default_config;
+            cb(default_config);
         });
     }
 };

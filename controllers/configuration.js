@@ -19,6 +19,8 @@ exports.update = (req, res, next) => {
 };
 
 exports.show = (req, res, next) => {
-    res.send(conf.get());
-    next();
+    conf.get((config) => {
+        res.send(config);
+        next();
+    });
 };
