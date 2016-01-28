@@ -20,15 +20,13 @@ module.exports = () => {
     // conf
     server.get("/config", config.show);
     server.put("/config", config.update);
+    server.get("/config/printers", printInfos.list);
     server.post("/config/reset", config.reset);
 
     // update
     server.get("/update/latest", update.latest);
     server.get("/update/version", update.versionInfo);
     server.get('/update/check', update.check)
-
-    // info
-    server.get("/printers", printInfos.list);
     // keep at the end of routes
     server.get(/.*/, restify.serveStatic({
         'directory': 'public',
@@ -36,6 +34,7 @@ module.exports = () => {
      }));
 
     server.listen(2000, function () {
+        console.log(server.address());
         console.log('%s running on %s', server.name, server.url);
     });
 

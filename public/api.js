@@ -4,6 +4,7 @@ var api = api || {};
 (function(api){
     api.print = {};
     api.update = {};
+    api.config = {};
 
     api.print.certified_label = function () {
         fetch('/print/label', post({
@@ -13,7 +14,8 @@ var api = api || {};
             manufacturer_name: 'Jean-Michel Monteur',
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
-        }));
+        }))
+        .then(alertify.success('Impression lancée'));
     };
 
     api.print.not_certified_label = function () {
@@ -25,7 +27,8 @@ var api = api || {};
             reason: 'Problème de péniche',
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
-        }));
+        }))
+        .then(alertify.success('Impression lancée'));
     };
 
     api.update.version = function () {
@@ -35,15 +38,43 @@ var api = api || {};
         });
     };
 
-    api.update.check = function() {
+    api.update.check = function () {
         return fetch('/update/check')
         .then(function(requestPromise) {
             return requestPromise.json();
         });
     };
 
-    api.update.latest = function() {
-        return fetch('update/latest')
+    api.update.latest = function () {
+        return fetch('/update/latest')
+        .then(function(requestPromise) {
+            return requestPromise.json();
+        });
+    };
+
+    api.config.show = function () {
+        return fetch('/config')
+        .then(function(requestPromise) {
+            return requestPromise.json();
+        });
+    };
+
+    api.config.printers = function () {
+        return fetch('/config/printers')
+        .then(function(requestPromise) {
+            return requestPromise.json();
+        });
+    };
+
+    api.config.update = function (config) {
+        return fetch('/config', put(config))
+        .then(function(requestPromise) {
+            return requestPromise.json();
+        });
+    };
+
+    api.config.reset = function () {
+        return fetch('/config/reset', post({}))
         .then(function(requestPromise) {
             return requestPromise.json();
         });
@@ -52,6 +83,17 @@ var api = api || {};
     function post (object) {
         return {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(object)
+        };
+    }
+
+    function put (object) {
+        return {
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

@@ -1,0 +1,15 @@
+.strong {
+    font-weight: bold;
+}
+
+.strong span {
+    font-weight: initial;
+}
+
+.alertify-notifier .ajs-message {
+    background: rgba(0,0,0,.95);
+    color: #FFF;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}

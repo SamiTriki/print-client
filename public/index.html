@@ -5,9 +5,12 @@
         <title>Gestion des imprimantes</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- CSS -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/alertify.min.css"/>
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/bootstrap.min.css"/>
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <link rel="stylesheet" href="./style.css">
     </head>
     <body style="padding-top: 50px;">
 
@@ -24,18 +27,38 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-    <!--                     <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li> -->
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
 
         <div class="container">
-
             <div class="row">
-                <div class="col-xs-12" style="padding-top: 20px";>
+                <div class="col-xs-12" style="padding-top: 20px">
+                    <h3>Configuration</h3>
+                    <div id="config">
+                        <p class="strong">Imprimante étiquettes:
+                            <input id="config-label"/>
+                        </p>
+                        <p class="strong">Imprimante bons:
+                            <input id="config-invoice"/>
+                        </p>
+                        <p class="strong">Imprimante disponibles:
+                            <span id="printers-list">
+                            </span>
+                        </p>
+                        <div class="btn btn-primary" id="update_config">
+                            Mettre à jour la configuration
+                        </div>
+                        <div class="btn btn-primary" id="reset_config">
+                            Réinitialiser la configuration
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
                     <h3 class="test">Tests:</h3>
                     <div class="btn btn-primary" id="certified">
                         Imprimer étiquette certifiée
@@ -50,11 +73,21 @@
                 <div class="col-xs-12">
                     <h3 class="version">Infos:</h3>
                     <div id="version-version_info">
-                        <p>mise à jour n° <span id="version-total_releases"></span></p>
-                        <p><span id="version-date"></span> par <span id="version-author"></span></p>
-
-                        <p >Notes: <span id="version-release_note"></span></p>
-                        <p>hash version n°:
+                        <p >mise à jour n°
+                            <span id="version-total_releases">
+                            </span>
+                        </p>
+                        <p>
+                            <span id="version-date">
+                            </span> par
+                            <span id="version-author">
+                            </span>
+                        </p>
+                        <p class="strong">Notes:
+                            <span id="version-release_note">
+                            </span>
+                        </p>
+                        <p class="strong">hash version:
                             <span id="version-version">
                             </span>
                         </p>
@@ -64,6 +97,8 @@
 
         </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.1/lodash.js"></script>
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.6.1/alertify.min.js"></script>
+    <script src="./conf.js"></script>
     <script src="./ui.js"></script>
     <script src="./api.js"></script>
     <script src="./script.js"></script>
