@@ -1,6 +1,4 @@
 "use strict";
-
-var config = require('../config');
 const printer = require('printer');
 const _ = require('lodash');
 const fs = require('fs');
@@ -9,6 +7,7 @@ const fs = require('fs');
 // @param {object} lptDocument - {file: file_bugger, extension: string}
 // @return {promise} => id of the current job
 exports.file = (lptDocument) => {
+    let config = require('./configuration-manager').get();
     return new Promise((resolve, reject) => {
         printer.printDirect({
             data: lptDocument.file,
@@ -24,6 +23,7 @@ exports.file = (lptDocument) => {
 // @param {string} label_path: full path to the generated file
 // @return {promise} => id of the current job
 exports.label = (label_path) => {
+    let config = require('./configuration-manager').get();
     return new Promise((resolve, reject) => {
         fs.readFile(label_path, function(err, data){
             if(err) { reject(err); }

@@ -2,11 +2,12 @@
 
 const barcode = require('rescode');
 const fs = require('fs');
-const outputDir = require('../config.js').dev.tempFiles;
+
 // creates an EAN13 barcore from an order id
 // @param {int} order_id: id of the order, has to be converted to string for barcode generation
 // @return {promise} => barcode_path: path to the barcode image
 exports.img = (order_id) => {
+    let outputDir = require('./configuration-manager').get().tempFiles;
     return new Promise((resolve, reject) => {
         let outfile = `${outputDir}/${order_id}_barcode.png`;
 

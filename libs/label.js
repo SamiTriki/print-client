@@ -2,10 +2,10 @@
 const pdf = require('pdfkit');
 const moment = require('moment');
 const fs = require('fs');
-const outputDir = require('../config.js').dev.tempFiles;
 
 function ConformityLabel (labelInfo, barcode_path) {
     let self = this;
+    let outputDir = require('../managers/configuration-manager').get().tempFiles;
 
     let now = moment().locale('fr').format("lll");
 

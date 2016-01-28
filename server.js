@@ -4,6 +4,7 @@ var restify = require('restify');
 var server = restify.createServer();
 var printJobs = require('./controllers/printJobs');
 var printInfos = require('./controllers/printInfos');
+var config = require('./controllers/configuration');
 
 module.exports = () => {
     server.use(restify.queryParser());
@@ -11,8 +12,15 @@ module.exports = () => {
 
     server.pre(restify.pre.sanitizePath());
 
-    server.get("/print/invoice", printJobs.printFile);
+    // print
+    server.get("/print/document", printJobs.printFile);
     server.post("/print/label", printJobs.label);
+
+    // conf
+    server.get("/config", config.show);
+    server.put("/config", config.update);
+    server.post("/config/reset", config.reset);
+
     server.get("/printers", printInfos.list);
     // keep at the end of routes
     server.get(/.*/, restify.serveStatic({

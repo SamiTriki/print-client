@@ -6,7 +6,6 @@ var printer = require('../managers/printer-manager');
 
 exports.printFile = (req, res, next) => {
     let path = req.body && req.body.path || 'paris1/105280/commande_fabrication_105280.pdf';
-    console.log(path);
 
     s3.getOrderDocument(path)
     .then((lptDocument) => {
@@ -18,7 +17,6 @@ exports.printFile = (req, res, next) => {
         .catch((err) => next(err));
     })
     .catch((err) => next(err));
-
 };
 
 exports.label = (req, res, next) => {
@@ -34,6 +32,5 @@ exports.label = (req, res, next) => {
         .catch((err) => next(err));
     })
     .catch((err) => next(err));
-
 };
 
