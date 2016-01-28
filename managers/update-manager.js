@@ -6,17 +6,19 @@ fs.writeFileSync(`${process.env.HOME}/.netrc`, `machine api.github.com\nlogin lp
 
 var git = require('simple-git')( `${__dirname}/..` );
 
-exports.update = () => {
+exports.latest = () => {
     return new Promise((resolve, reject) => {
         git.pull(function(err, update) {
             if (err) { reject(err); }
-
+            let updated;
 
             if(update && update.summary.changes) {
+                updated = true;
                 // scrit must be launched with nodemon, which watch for changes and restarts it automatically
-                resolve('Successful update, server has restarted');
+                resolve(updated);
             } else {
-                resolve('No update, already last version');
+                updated = false;
+                resolve(updated);
             }
         });
     });
