@@ -2,6 +2,7 @@
 
 const aws = require ('aws-sdk');
 const s3 = new aws.S3();
+const log = require('./logger-manager').log;
 
 // @param {string} path: full path to the document
 // @return {promise} => lptDocument: object containing the file buffer + extension
@@ -17,6 +18,7 @@ exports.getOrderDocument = (path) => {
         };
         s3.getObject(params, (err, data) => {
             if (err) {
+                log(`Error while getting aws file: ${err}`, __filename);
                 reject(err);
             } else {
                 resolve({

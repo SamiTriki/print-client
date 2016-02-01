@@ -7,7 +7,7 @@ var api = api || {};
     api.config = {};
 
     api.print.certified_label = function () {
-        fetch('/print/label', post({
+        cFetch('/print/label', post({
             type: 'certified',
             order_id: 1234567891011,
             customer_name: 'Jean Dupont',
@@ -15,11 +15,11 @@ var api = api || {};
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
         }))
-        .then(alertify.success('Impression lancée'));
+        .then(() => alertify.success('Impression lancée'));
     };
 
     api.print.not_certified_label = function () {
-        fetch('/print/label', post({
+        cFetch('/print/label', post({
             type: 'not_certified',
             order_id: 1234567891011,
             customer_name: 'Jean Dupont',
@@ -28,55 +28,65 @@ var api = api || {};
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
         }))
-        .then(alertify.success('Impression lancée'));
+        .then(() => alertify.success('Impression lancée'));
     };
 
     api.update.version = function () {
-        return fetch('/update/version')
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/update/version')
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.update.check = function () {
-        return fetch('/update/check')
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/update/check')
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.update.latest = function () {
-        return fetch('/update/latest')
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/update/latest')
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.config.show = function () {
-        return fetch('/config')
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/config')
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.config.printers = function () {
-        return fetch('/config/printers')
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/config/printers')
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.config.update = function (config) {
-        return fetch('/config', put(config))
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/config', put(config))
+        .then(function(response) {
+            return response.json();
         });
     };
 
     api.config.reset = function () {
-        return fetch('/config/reset', post({}))
-        .then(function(requestPromise) {
-            return requestPromise.json();
+        return cFetch('/config/reset', post({}))
+        .then(function(response) {
+            return response.json();
+        });
+    };
+
+    api.logs = function () {
+        return cFetch('/logs')
+        .then(function(response) {
+            return response.text();
+        })
+        .catch(function (response) {
+            throw new Error('Pas de logs');
         });
     };
 
@@ -100,5 +110,20 @@ var api = api || {};
             },
             body: JSON.stringify(object)
         };
+    }
+    //custom fetch to reject 404 https://github.com/github/fetch/issues/155
+
+    function cFetch(url, options) {
+        if (!options) {options = {}; }
+        if (!options.credentials) { options.credentials = 'same-origin'; }
+        return fetch(url, options).then(function(response) {
+            if (response.status >= 200 && response.status < 300) {
+                return Promise.resolve(response);
+            } else {
+                var error = new Error(response.statusText || response.status);
+                error.response = response;
+                return Promise.reject(error);
+            }
+        });
     }
 })(api);

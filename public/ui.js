@@ -8,6 +8,7 @@ var ui = ui || {};
     ui.btn_update_config = document.getElementById('update_config');
     ui.input_label_printer = document.getElementById('config-label');
     ui.input_invoice_printer = document.getElementById('config-invoice');
+    ui.logs = document.getElementById('logs');
 
     ui.showVersion = function (version) {
         version.date && (version.date = new Date(version.date));

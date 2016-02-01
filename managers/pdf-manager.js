@@ -3,6 +3,7 @@
 const exec = require('child_process').exec;
 var barcode = require('./barcode-manager');
 const Label = require("../libs/label");
+const log = require('./logger-manager').log;
 
 // generates a certified label
 // @param {object} labelInfo: contains the description of the label withing the following
@@ -24,10 +25,14 @@ exports.label = (labelInfo) => {
                 label.output()
                 .then((pdfLabel) => resolve(pdfLabel));
             } catch (e) {
+                log(`Error while instanciating new Label, order: ${labelInfo.order_id}`, __filename);
                 reject(e);
             }
         })
-        .catch((e) => reject('error while getting barcode image' + e));
+        .catch((e) => {
+            log(`Error while getting barcode image, ${e}`, __filename);
+            reject('error while getting barcode image' + e);
+        });
     });
 };
 

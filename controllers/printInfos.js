@@ -1,7 +1,7 @@
 "use strict";
 
-const error = require('restify').errors;
 var printer = require('../managers/printer-manager');
+const error = require('restify').errors;
 
 exports.list = (req, res, next) => {
     let printersList = printer.printersList();

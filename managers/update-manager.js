@@ -1,5 +1,6 @@
 "use strict";
 var fs = require('fs');
+const log = require('./logger-manager').log;
 
 fs.writeFileSync(`${process.env.HOME}/.netrc`, `machine api.github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}
     machine github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}`);
@@ -9,12 +10,15 @@ var git = require('simple-git')( `${__dirname}/..` );
 exports.latest = () => {
     return new Promise((resolve, reject) => {
         git.pull(function(err, update) {
-            if (err) { reject(err); }
+            if (err) {
+                log(`Error while fetching latest data from github`, __filename);
+                reject(err);
+            }
             let updated;
 
             if(update && update.summary.changes) {
                 updated = true;
-                // scrit must be launched with nodemon, which watch for changes and restarts it automatically
+                // TODO: RESTART LOGIC HERE FOR PRODUCTION
                 resolve(updated);
             } else {
                 updated = false;
@@ -27,7 +31,10 @@ exports.latest = () => {
 exports.getStatus = () => {
     return new Promise((resolve, reject) => {
         git.log((err, logs) => {
-            if (err) {reject(err);}
+            if (err) {
+                log(`Error while logging github info`, __filename);
+                reject(err);
+            }
 
             if (logs && logs.latest) {
                 resolve({
@@ -62,6 +69,7 @@ exports.check = () => {
 
             git.fetch(() => checkStatus());
         } catch (e) {
+            log(`Could not check the github status update`, __filename);
             reject(new Error(`Could not check the status update`));
         }
     });

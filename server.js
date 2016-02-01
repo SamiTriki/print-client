@@ -1,11 +1,12 @@
 "use strict";
 
-var restify = require('restify');
-var server = restify.createServer();
-var printJobs = require('./controllers/printJobs');
-var printInfos = require('./controllers/printInfos');
-var config = require('./controllers/configuration');
-var update = require('./controllers/update');
+const restify = require('restify');
+const server = restify.createServer();
+const printJobs = require('./controllers/printJobs');
+const printInfos = require('./controllers/printInfos');
+const config = require('./controllers/configuration');
+const update = require('./controllers/update');
+const logs = require('./controllers/logs');
 
 module.exports = () => {
     server.use(restify.queryParser());
@@ -26,7 +27,10 @@ module.exports = () => {
     // update
     server.get("/update/latest", update.latest);
     server.get("/update/version", update.versionInfo);
-    server.get('/update/check', update.check)
+    server.get('/update/check', update.check);
+
+    //logs
+    server.get("/logs", logs.get);
     // keep at the end of routes
     server.get(/.*/, restify.serveStatic({
         'directory': 'public',
@@ -35,7 +39,7 @@ module.exports = () => {
 
     server.listen(2000, function () {
         console.log(server.address());
-        console.log('%s running on %s', server.name, server.url);
+        console.log(`${server.name} running on ${server.url}`);
     });
 
 };

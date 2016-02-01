@@ -46,7 +46,6 @@
 
     function updateConfig () {
         ui.setInputValues();
-        console.log(conf.current);
         api.config.update(conf.current)
         .then(function(newConfig) {
             ui.showConfig(newConfig);
@@ -55,7 +54,18 @@
         });
     }
 
+    function showLogs () {
+        api.logs()
+        .then(function (logs) {
+            ui.logs.innerHTML = logs.split('\\n').join('<br/>');
+        })
+        .catch(function () {
+            ui.logs.innerHTML = 'Pas de logs disponibles';
+        });
+    }
+
     showPrinters();
     showVersion();
     showConfig();
+    showLogs();
 })();
