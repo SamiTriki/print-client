@@ -6,13 +6,13 @@ const fs = require('fs');
 // Prints from a file buffer
 // @param {object} lptDocument - {file: file_bugger, extension: string}
 // @return {promise} => id of the current job
-exports.file = (lptDocument) => {
+exports.file = (lptDocument, chosenPrinter) => {
     let config = require('./configuration-manager').getSync();
     return new Promise((resolve, reject) => {
         printer.printDirect({
             data: lptDocument.file,
             type: lptDocument.extension.toUpperCase(),
-            printer: config.printers.invoice,
+            printer: config.printers[chosenPrinter],
             success: (id) => resolve(id),
             error: (err) => reject(err)
         });

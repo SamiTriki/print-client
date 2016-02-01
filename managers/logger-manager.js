@@ -7,7 +7,7 @@ var moment = require('moment');
 exports.log = (logs, file) => {
     return new Promise((resolve, reject) => {
         fs.appendFile(logs_path,
-            `[${file}]: ${logs} | ${moment().locale('fr').format('DD/MM/YYYY, h:mm:ss')}\n`,
+            `[${file}]: ${logs} | ${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')}\n`,
             `utf-8`, (err) => {
             if (err) { reject(err); }
             resolve();

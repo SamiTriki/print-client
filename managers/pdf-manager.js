@@ -4,6 +4,7 @@ const exec = require('child_process').exec;
 var barcode = require('./barcode-manager');
 const Label = require("../libs/label");
 const log = require('./logger-manager').log;
+const fs = require('fs');
 
 // generates a certified label
 // @param {object} labelInfo: contains the description of the label withing the following
@@ -41,16 +42,29 @@ exports.label = (labelInfo) => {
 // @param {string} path: path of the directory containing the file
 // @param {string} filename: name of the file
 // @return {promise} => path: full path to the cropped pdf
-exports.crop = (path, filename) => {
-    //TODO: clean file in file manager
+exports.crop = (lptDocument) => {
     return new Promise((resolve, reject) => {
-        exec(`pdfcrop ${path + filename} --margins "-490 -67 0 -62" ${path}cropped_${filename}`,
-        (err, stdout) => {
+        let outputDir = require('./configuration-manager').getSync().tempFiles;
+        let rand = Math.floor(Math.random() * 99999999999);
+        let delivery_uncropped = `${outputDir}/${rand}_chronopost.pdf`;
+        let delivery_cropped = `${outputDir}/${rand}_cropped_chronopost.pdf`;
+        fs.writeFile(delivery_uncropped, lptDocument.file, (err) => {
+            if (err) { reject(`Could not write file from s3, ${err}`); }
+            exec(`pdfcrop ${delivery_uncropped} --margins "-490 -67 0 -62" ${delivery_cropped}`,
+            (e, stdout) => outputCropped(e, stdout));
+        });
+
+        function outputCropped (err, stdout) {
             if (!err && stdout.includes('written')) {
-                resolve(`${path}cropped_${filename}`);
+                fs.readFile(delivery_cropped, function (err, buffer) {
+                    if (err) { reject(`Could not read stream from cropped chrono ${err}`); }
+                    lptDocument.file = buffer;
+                    resolve(lptDocument);
+                });
             } else {
                 reject(err);
             }
-        });
+        }
     });
 };
+

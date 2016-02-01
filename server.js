@@ -15,7 +15,8 @@ module.exports = () => {
     server.pre(restify.pre.sanitizePath());
 
     // print
-    server.get("/print/document", printJobs.printFile);
+    server.post("/print/document", printJobs.printFile);
+    server.post("/print/delivery", printJobs.printDelivery);
     server.post("/print/label", printJobs.label);
 
     // conf
