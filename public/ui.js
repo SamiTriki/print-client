@@ -13,6 +13,8 @@ var ui = ui || {};
     ui.logs = document.getElementById('logs');
 
     ui.showVersion = function (version) {
+        // remove useless text
+        version.release_note && (version.release_note = version.release_note.split('(HEAD')[0]);
         version.date && (version.date = new Date(version.date));
         _.forEach(version, function(value, property) {
             document.getElementById('version-' + property) && (document.getElementById('version-' + property).innerHTML = value);

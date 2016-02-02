@@ -7,7 +7,7 @@ const log = require('./logger-manager').log;
 const fs = require('fs');
 
 // generates a certified label
-// @param {object} labelInfo: contains the description of the label withing the following
+// @param {object} labelInfo: contains the description of the label within the following
 // -- @param {string} type: type of label wanted within [certified, not_certified... others to come]
 // -- @param {int} order_id
 // -- @param {string} customer_name: name of the customer

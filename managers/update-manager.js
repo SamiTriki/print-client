@@ -1,7 +1,6 @@
 "use strict";
 var fs = require('fs');
 const log = require('./logger-manager').log;
-
 fs.writeFileSync(`${process.env.HOME}/.netrc`, `machine api.github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}
     machine github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}`);
 
@@ -76,5 +75,25 @@ exports.check = () => {
 };
 
 exports.history = () => {
+    return new Promise((resolve, reject) => {
+        git.log((err, logs) => {
+            if (err) {
+                log(`Error while logging github info`, __filename);
+                reject(err);
+            }
 
+            if (logs && logs.latest) {
+                resolve({
+                    version: logs.latest.hash && logs.latest.hash.replace("'","").trim(),
+                    date: new Date(logs.latest.date) || logs.latest.date,
+                    release_note: logs.latest.message,
+                    author: logs.latest.author_name,
+                    total_releases: logs.total
+                });
+            } else {
+                resolve();
+            }
+
+        });
+    });
 };
