@@ -8,5 +8,5 @@ module.exports = {
         label: 'intermec'
     },
     tempFiles: `${__dirname}/../tmp`,
-    logs_path: `${__dirname}/../`
+    logs_path: `${__dirname}/../logs`
 };

@@ -11,6 +11,9 @@ exports.printFile = (req, res, next) => {
 
     s3.getOrderDocument(path)
     .then((lptDocument) => {
+
+        if (req.body.no_print) {res.send(200, path); next(); return;}
+
         printer_manager.file(lptDocument, 'invoice')
         .then(id => {
             log(`File ${path} printing sent with job id ${id}`, __filename);
@@ -36,6 +39,8 @@ exports.printDelivery = (req, res, next) => {
     .then((lptDocument) => {
         pdf.crop(lptDocument)
         .then((croppedDocument) => {
+            if (req.body.no_print) {res.send(200, path); next(); return;}
+
             printer_manager.file(croppedDocument, 'label')
             .then(id => {
                 log(`Delivery file ${path} printing sent with job id ${id}`, __filename);
@@ -64,6 +69,8 @@ exports.label = (req, res, next) => {
 
     pdf.label(req.body)
     .then((label_path) => {
+        if (req.body.no_print) {res.send(200, label_path); next(); return;}
+
         printer_manager.label(label_path)
         .then((id) => {
             log(`${req.body.type || '[NO TYPE]'} label ${req.body.order_id || 'NO LABEL INFO'} printing send with job id ${id}`, __filename);
