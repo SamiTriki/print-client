@@ -5,6 +5,8 @@
     ui.btn_not_certified.addEventListener('click', api.print.not_certified_label);
     ui.btn_reset_config.addEventListener('click', resetConfig);
     ui.btn_update_config.addEventListener('click', updateConfig);
+    ui.btn_logs_bottom.addEventListener('click', ui.logs_tail);
+
 
     function showVersion () {
         api.update.version()
@@ -57,9 +59,10 @@
     function showLogs () {
         api.logs()
         .then(function (logs) {
-            ui.logs.innerHTML = logs.split('\\n').join('<br/>');
+            ui.formatLogs(logs);
         })
-        .catch(function () {
+        .catch(function (e) {
+            console.log(e);
             ui.logs.innerHTML = 'Pas de logs disponibles';
         });
     }

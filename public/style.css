@@ -22,3 +22,7 @@ hr {
 h3 {
     margin-top: 0px;
 }
+
+pre {
+    max-height: 270px;
+}

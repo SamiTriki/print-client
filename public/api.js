@@ -83,7 +83,7 @@ var api = api || {};
     api.logs = function () {
         return cFetch('/logs')
         .then(function(response) {
-            return response.text();
+            return response.json();
         })
         .catch(function (response) {
             throw new Error('Pas de logs');

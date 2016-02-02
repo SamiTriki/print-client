@@ -1,7 +1,7 @@
 "use strict";
 const fs = require('fs');
 var config = require('./configuration-manager').getSync();
-var logs_path = `${config.logs_path}logs.log`;
+var logs_path = `${config.logs_path}/logs.log`;
 var moment = require('moment');
 
 exports.log = (logs, file) => {
@@ -20,7 +20,7 @@ exports.get = () => {
         try {
             fs.readFile(logs_path, 'utf-8', function(err, logs) {
                 if (err) {reject(err);}
-                resolve(logs);
+                resolve(format(logs));
             });
         } catch (e) {
             reject(e);
@@ -30,10 +30,16 @@ exports.get = () => {
 
 exports.reset = () => {
     try {
-        let archive = `${config.logs_path}archived_${Date.now()}.log`;
+        let archive = `${config.logs_path}/archived_${Date.now()}.log`;
         fs.createReadStream(logs_path).pipe(fs.createWriteStream(archive));
         fs.unlink(logs_path);
     } catch (e) {
         exports.log(`LOGGING INTERNAL ERROR: Can't delete old logs`);
     }
 };
+
+function format (logs) {
+    // strips newlines and empty ones
+    return logs.split('\n').filter(l => !!l);
+}
+
