@@ -11,7 +11,7 @@ const logs = require('./controllers/logs');
 module.exports = () => {
 
     server.use(restify.queryParser());
-    server.use(restify.urlEncodedBodyParser({ mapParams : false }));
+    server.use(restify.bodyParser());
     server.pre(restify.pre.sanitizePath());
     server.pre(restify.CORS());
 
