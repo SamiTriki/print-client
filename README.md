@@ -1,5 +1,7 @@
 # Printing #
 
+add the field `no_print: true` to any request so you can save a forest or two :deciduous_tree:
+
 ## Label
 
 	POST /print/label
