@@ -4,7 +4,7 @@ module.exports = {
         subPath: 'paris1'
     },
     printers: {
-        invoice: 'Brother_MFC-9460CDN',
+        invoice: 'Brother-MFC-9460CDN',
         label: 'intermec'
     },
     tempFiles: `${__dirname}/../tmp`,

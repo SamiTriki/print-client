@@ -27,8 +27,10 @@ exports.replace = (newConfig, cb) => {
 
 exports.get = (cb) => {
     try {
-        // if file exists.
-        cb(JSON.parse(fs.readFileSync(config_file_path)));
+        fs.readFile(config_file_path, 'utf-8', (err, file) => {
+            if (err) { throw new Error(`Failed to read config file, ${err}`); }
+            cb(JSON.parse(file));
+        });
     } catch (e) {
         // if no config file, save and return default
         save(default_config,() => {

@@ -21,7 +21,7 @@ exports.printFile = (req, res, next) => {
             next();
         })
         .catch((err) => {
-            log( `Failed to send job [${path}] to printer: {err}`,__filename);
+            log( `Failed to send job [${path}] to printer: ${err}`,__filename);
             next(err);
         });
     })
