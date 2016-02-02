@@ -9,10 +9,11 @@ const update = require('./controllers/update');
 const logs = require('./controllers/logs');
 
 module.exports = () => {
-    server.use(restify.queryParser());
-    server.use(restify.bodyParser());
 
+    server.use(restify.queryParser());
+    server.use(restify.urlEncodedBodyParser({ mapParams : false }));
     server.pre(restify.pre.sanitizePath());
+    server.pre(restify.CORS());
 
     // print
     server.post("/print/document", printJobs.printFile);
