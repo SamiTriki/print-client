@@ -10,6 +10,7 @@ const log = require('./logger-manager').log;
 exports.img = (order_id) => {
     let outputDir = require('./configuration-manager').getSync().tempFiles;
     return new Promise((resolve, reject) => {
+        if (!order_id) { reject(`Order ID not provided`); }
         let outfile = `${outputDir}/${order_id}_barcode.png`;
         try {
             // Sequence is important
