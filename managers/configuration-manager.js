@@ -59,6 +59,6 @@ exports.reset = (cb) => {
 function save (config, cb) {
     fs.writeFile(config_file_path, JSON.stringify(config), (err) => {
         if (err) { throw new Error('Failed to write config file'); }
-        cb();
+        cb && cb();
     });
 }
