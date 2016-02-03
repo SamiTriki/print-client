@@ -13,7 +13,7 @@ function pdf_manager_test () {
     describe('Label creation', () => {
         let labelInfo = {
             type: 'certified',
-            order_id: Math.floor(Math.random() * 9999999999999).toString(),
+            order_id: Math.floor(Math.random() * 999999),
             customer_name: 'Jean Dupont',
             manufacturer_name: 'Jean-Michel Monteur',
             manufacturing: 'Atelier Paris',

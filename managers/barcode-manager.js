@@ -11,6 +11,7 @@ exports.img = (order_id) => {
     let outputDir = require('./configuration-manager').getSync().tempFiles;
     return new Promise((resolve, reject) => {
         if (!order_id) { reject(`Order ID not provided`); }
+
         let outfile = `${outputDir}/${order_id}_barcode.png`;
         try {
             // Sequence is important
@@ -20,7 +21,7 @@ exports.img = (order_id) => {
             reject(`Barcode library error`);
         }
 
-        let image = barcode.create("ean13", order_id.toString());
+        let image = barcode.create("ean13", pad(order_id, 13));
 
         fs.writeFile(outfile, image, (err) => {
             if (err) {
@@ -31,3 +32,9 @@ exports.img = (order_id) => {
         });
     });
 };
+
+// add zeroes in front of barcodes, needs to be exactly 13;
+function pad (str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+}

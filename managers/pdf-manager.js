@@ -31,8 +31,8 @@ exports.label = (labelInfo) => {
             }
         })
         .catch((e) => {
-            log(`Error while getting barcode image, ${e}`, __filename);
-            reject('error while getting barcode image' + e);
+            log(`Error while getting barcode image, ${e}, informations sent: ${labelInfo}`, __filename);
+            reject('error while getting barcode image ' + e);
         });
     });
 };
