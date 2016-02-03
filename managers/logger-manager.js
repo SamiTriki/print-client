@@ -4,10 +4,13 @@ var config = require('./configuration-manager').getSync();
 var logs_path = `${config.logs_path}/logs.log`;
 var moment = require('moment');
 
-exports.log = (logs, file) => {
+exports.log = (logs, file, cb) => {
     fs.appendFile(logs_path,
     `[${file}]: ${logs} | ${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')}\n`,
-    `utf-8`, err => err && console.log(`LOGGER MANAGER ERROR ${err} in ${file}`));
+    `utf-8`, (err) => {
+        err && console.log(`LOGGER MANAGER ERROR ${err} in ${file}`);
+        cb && cb();
+    });
 };
 
 exports.get = () => {

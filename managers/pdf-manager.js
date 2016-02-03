@@ -24,7 +24,7 @@ exports.label = (labelInfo) => {
             try {
                 let label = new Label(labelInfo, barcode_path);
                 label.output()
-                .then((pdfLabel) => resolve(pdfLabel));
+                .then((pdf_label_path) => resolve(pdf_label_path));
             } catch (e) {
                 log(`Error while instanciating new Label, order: ${labelInfo.order_id}`, __filename);
                 reject(e);
