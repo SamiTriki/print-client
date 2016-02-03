@@ -17,17 +17,12 @@
   "dependencies": {
     "aws-sdk": "^2.2.30",
     "barcode": "^0.1.0",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^5.2.0",
-    "chai-fs": "^0.1.0",
     "del": "^2.2.0",
     "dotenv": "^1.2.0",
     "lodash": "^3.10.1",
-    "mocha": "^2.4.5",
     "moment": "^2.11.1",
     "pdfkit": "^0.7.2",
     "printer": "^0.2.1",
-    "rescode": "^0.1.10",
     "restify": "^4.0.3",
     "simple-git": "^1.21.0"
   }

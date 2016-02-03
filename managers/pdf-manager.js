@@ -49,7 +49,10 @@ exports.crop = (lptDocument) => {
         let delivery_uncropped = `${outputDir}/${rand}_chronopost.pdf`;
         let delivery_cropped = `${outputDir}/${rand}_cropped_chronopost.pdf`;
         fs.writeFile(delivery_uncropped, lptDocument.file, (err) => {
-            if (err) { reject(`Could not write file from s3, ${err}`); }
+            if (err) {
+                reject(`Could not write file from s3, ${err}`);
+                log(`Error in crop function, could not write file from S3, ${err}`, __filename);
+            }
             exec(`pdfcrop ${delivery_uncropped} --margins "-490 -67 0 -62" ${delivery_cropped}`,
             (e, stdout) => outputCropped(e, stdout));
         });
@@ -62,6 +65,7 @@ exports.crop = (lptDocument) => {
                     resolve(lptDocument);
                 });
             } else {
+                log(`PDF CROP ERROR WHILE CROPPING, ${err}`, __filename);
                 reject(err);
             }
         }

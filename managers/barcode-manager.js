@@ -21,7 +21,7 @@ exports.img = (order_id) => {
             reject(`Barcode library error`);
         }
 
-        let image = barcode.create("ean13", pad(order_id, 13));
+        let image = barcode.create("ean13", pad(order_id));
 
         fs.writeFile(outfile, image, (err) => {
             if (err) {
@@ -33,8 +33,12 @@ exports.img = (order_id) => {
     });
 };
 
-// add zeroes in front of barcodes, needs to be exactly 13;
-function pad (str, max) {
+// add zeroes in front of barcodes, needs to be exactly 13 for the barcode;
+function pad (str) {
   str = str.toString();
-  return str.length < max ? pad("0" + str, max) : str;
+  return str.length < 13 ? pad("0" + str, 13) : str;
+}
+
+if (process.env.NODE_ENV === 'test') {
+  exports._private = { pad: pad };
 }

@@ -1,4 +1,5 @@
 "use strict";
+process.env.NODE_ENV = 'test';
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -10,7 +11,10 @@ describe("PDF manager", pdf_manager_test);
 
 function pdf_manager_test () {
 
-    describe('Label creation', () => {
+    describe('Label creation', label_creation);
+    describe('Shipping document cropping', shipping_crop);
+
+    function label_creation() {
         let labelInfo = {
             type: 'certified',
             order_id: Math.floor(Math.random() * 999999),
@@ -39,7 +43,7 @@ function pdf_manager_test () {
             .then(label_path => label_path.should.be.a.path(label_path));
         });
 
-        it("Should create a file", () => {
+        it("The file should be valid", () => {
             return pdf_manager.label(labelInfo)
             .then(label_path => label_path.should.be.a.file(label_path));
         });
@@ -53,6 +57,17 @@ function pdf_manager_test () {
             return pdf_manager.label(labelInfo)
             .then(label_path => label_path.should.be.a.file(label_path).and.not.empty);
         });
-    });
+    }
+
+    function shipping_crop() {
+        /*
+        check if crop library exists
+        check if promise exists
+        check if it resolves
+        check if resolves as an object
+        check if it has an exension and that it's
+        check if it has file property and that it's a buffer
+        */
+    }
 }
 
