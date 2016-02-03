@@ -27,6 +27,7 @@
     "moment": "^2.11.1",
     "pdfkit": "^0.7.2",
     "printer": "^0.2.1",
+    "rescode": "^0.1.10",
     "restify": "^4.0.3",
     "simple-git": "^1.21.0"
   }
