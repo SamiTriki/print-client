@@ -8,7 +8,7 @@ const barcode_manager = require('../../managers/barcode-manager');
 const _private = require('../../managers/barcode-manager')._private;
 chai.use(chaiAsPromised);
 chai.use(require('chai-fs'));
-describe("PDF manager", barcode_manager_test);
+describe("Barcode manager", barcode_manager_test);
 
 function barcode_manager_test () {
 
