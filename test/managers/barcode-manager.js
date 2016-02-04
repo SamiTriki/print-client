@@ -13,7 +13,7 @@ describe("PDF manager", barcode_manager_test);
 function barcode_manager_test () {
 
     describe('Barcode image creation', barcode_image_creation);
-    describe('Numbers padding', numbers_padding);
+    describe('Barcode identified for ean13', numbers_padding);
 
     function barcode_image_creation() {
         let rand = Math.floor(Math.random() * 999999);
@@ -53,22 +53,26 @@ function barcode_manager_test () {
     }
 
     function numbers_padding() {
-        // todo RUN TEST 1000 TIMES
+
         let rand = (min,max) => Math.floor(Math.random()*(max-min+1)+min);
-        let randomNumber = rand(0, 9999999999999);
         let pad = _private.pad;
-        let padded_number = pad(randomNumber);
+        let numbers = [];
+
+        for (let i = 0; i < 1000; i++) {
+            let randomNumber = rand(0, 9999999999999);
+            numbers[i] = pad(randomNumber);
+        }
 
         it("Should exist", () => {
-            should.exist(padded_number);
+            numbers.forEach((padded_number) => should.exist(padded_number));
         });
 
         it("Should be a string", () => {
-            padded_number.should.be.a('string');
+            numbers.forEach((padded_number) => padded_number.should.be.a('string'));
         });
 
         it("Should be 13 characters long", () => {
-            padded_number.length.should.eql(13);
+            numbers.forEach((padded_number) => padded_number.length.should.eql(13));
         });
     }
 }
