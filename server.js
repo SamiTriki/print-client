@@ -39,7 +39,7 @@ module.exports = () => {
         'default': 'index.html'
      }));
 
-    server.listen(2000, function () {
+    server.listen(2000, '0.0.0.0', function () {
         console.log(server.address());
         console.log(`${server.name} running on ${server.url}`);
     });
