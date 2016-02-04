@@ -15,6 +15,8 @@
 ###Intermec driver:
 At the time of writing, we are using Intermec PC43d thermal printers for delivery forms and comformity labels.
 
+**:exclamation: Important: Remember to set the start adjust to -15mm on the printer, if the label appears cut, or that it prints 2 labels, check this parameter before anything else**
+
 The thermal printers driver is not installed by default, you need to install it by doing the following:
 
 - Make sure all the drivers dependencies are installed
