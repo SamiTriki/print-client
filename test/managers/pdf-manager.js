@@ -60,7 +60,6 @@ function pdf_manager_test () {
     }
 
     function shipping_crop() {
-        let exec = require('child_process').exec;
         let fs = require('fs');
         let test_pdf_path = 'ressources/chronopost_test.pdf';
         let test_pdf_document = {
@@ -68,19 +67,6 @@ function pdf_manager_test () {
             extension: 'pdf'
         };
         let cropped_document = pdf_manager.crop(test_pdf_document);
-
-        it("Pdfcrop library should be installed on the system", (done) => {
-            exec('dpkg -S `which pdfcrop`', (err, stdout, stderr) => {
-                stderr = stderr || undefined;
-                err = err || undefined;
-
-                should.not.exist(err);
-                should.not.exist(stderr);
-                should.exist(stdout);
-                stdout.should.contain('pdfcrop');
-                done();
-            });
-        });
 
         it("test pdf document path should be valid", () => {
             test_pdf_path.should.be.a.path();
