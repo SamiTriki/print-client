@@ -60,14 +60,64 @@ function pdf_manager_test () {
     }
 
     function shipping_crop() {
-        /*
-        check if crop library exists
-        check if promise exists
-        check if it resolves
-        check if resolves as an object
-        check if it has an exension and that it's
-        check if it has file property and that it's a buffer
-        */
+        let exec = require('child_process').exec;
+        let fs = require('fs');
+        let test_pdf_path = 'ressources/chronopost_test.pdf';
+        let test_pdf_document = {
+            file: fs.readFileSync(test_pdf_path),
+            extension: 'pdf'
+        };
+        let cropped_document = pdf_manager.crop(test_pdf_document);
+
+        it("Pdfcrop library should be installed on the system", (done) => {
+            exec('dpkg -S `which pdfcrop`', (err, stdout, stderr) => {
+                stderr = stderr || undefined;
+                err = err || undefined;
+
+                should.not.exist(err);
+                should.not.exist(stderr);
+                should.exist(stdout);
+                stdout.should.contain('pdfcrop');
+                done();
+            });
+        });
+
+        it("test pdf document path should be valid", () => {
+            test_pdf_path.should.be.a.path();
+        });
+
+        it("the test pdf should be a non empty file", () => {
+            return test_pdf_path.should.be.a.file().and.not.empty;
+        });
+
+        it("Should return a promise", () => {
+            cropped_document.should.be.instanceof(Promise);
+        });
+
+        it("Promise should resolve an object", () => {
+            return cropped_document.should.eventually.be.instanceof(Object);
+        });
+
+        it("The cropped document should have an 'extension' property", () => {
+            return cropped_document.should.eventually.have.property("extension");
+        });
+
+        it("Entension must be pdf", () => {
+            return cropped_document.should.eventually.have.property("extension").to.be.eql('pdf');
+        });
+
+        it("The document should have an 'file' property", () => {
+            return cropped_document.should.eventually.have.property("file");
+        });
+
+        it("The file should be a buffer", () => {
+            return cropped_document.should.eventually.have.property("file").to.be.instanceof(Buffer);
+        });
+
+        it("Should not error while cropping", () => {
+            return cropped_document.should.not.be.rejected;
+        });
+
     }
 }
 

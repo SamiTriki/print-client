@@ -40,7 +40,7 @@ function external_storage_test () {
             .then(document => recognized.should.include(document.extension));
         });
 
-        it("The document should have an 'extension' property", () => {
+        it("The document should have an 'file' property", () => {
             return lptDocument.should.eventually.have.property("file");
         });
 

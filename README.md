@@ -11,6 +11,9 @@
 	- cups-dev : `sudo apt-get install libcups2-dev`
 	- pdfcrop (paquet linux) `sudo apt-get install texlive-extra-utils`
 
+
+**:exclamation: If you make a change on the server and push these from it, remember to delete the .netrc file that's used to self update the app with readonly rights on the repo which prevents you from pushing**
+
 ##Cups configuration
 ###Intermec driver:
 At the time of writing, we are using Intermec PC43d thermal printers for delivery forms and comformity labels.
@@ -27,14 +30,14 @@ sudo apt-get install cups automake autoconf gcc ghostscript poppler-utils netpbm
 - copy the default config file in cups
 
 ```bash
-sudo cp default_cupsd.conf /etc/cups/cupsd.conf
+sudo cp config/default_cupsd.conf /etc/cups/cupsd.conf
 ```
 - Install driver
 ```bash
 #Un-pack the driver package in directory of choice:
-tar xvf cups_driver.tar.gz
+tar xvf ressources/cups_driver.tar.gz
 #Enter the new extracted directory:
-cd cupsdriver-1.1-53
+cd ressources/cupsdriver-1.1-53
 #From there only one command is needed:
 ./build.sh
 ```
