@@ -5,6 +5,12 @@ const default_config = require('../config/default_config');
 
 var fs = require('fs');
 
+// reset configuration from cli in case of problem
+if (process.argv[1] == 'reset') {
+    console.log('Resetting configuration to use it in the new directory');
+    exports.reset()
+}
+
 exports.set = (type, prop, value, cb) => {
     let config = exports.getSync();
     if (config[type] && config[type][prop]) {
@@ -62,3 +68,5 @@ function save (config, cb) {
         cb && cb();
     });
 }
+
+

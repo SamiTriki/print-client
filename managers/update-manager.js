@@ -17,7 +17,7 @@ exports.latest = () => {
 
             if(update && update.summary.changes) {
                 updated = true;
-                // TODO: RESTART LOGIC HERE FOR PRODUCTION
+                // Program must be launched with pm2 which watches file changes and restarts the app, app should restart at this point
                 resolve(updated);
             } else {
                 updated = false;

@@ -65,16 +65,23 @@ cd lpt-print-client
 npm install
 # Check if all the tests pass prior to launching the server
 npm test
-# Then start the app
-# Note that pm2 launches the app and creates a startup script, so it's not necessary to relaunch the server when the machine reboots, you can check the status of the app using 'pm2 list'
-npm start
 ```
 add the following in a .env file at the folder root or in your environment variables
 
 ```
-AWS_ACCESS_KEY_ID=ID_AWS
-AWS_SECRET_ACCESS_KEY=MOT_DE_PASSE_AWS
-GITHUB_BOT_PASS=MOT_DE_PASSE: lpt-self-update
+AWS_ACCESS_KEY_ID=AWS_ID
+AWS_SECRET_ACCESS_KEY=AWS_PASSWORD
+GITHUB_BOT_PASS=LPT_SELF_UPDATE_PASSWORD
+```
+```bash
+# Then start the app
+# Note that pm2 launches the app and creates a startup script, so it's not necessary to relaunch the server when the machine reboots, you can check the status of the app using 'sudo pm2 list'
+npm start
+```
+If there is an error with pm2 while starting the app, try this command from the project directory:
+```bash
+#it will reset the configuration for you in case any path changes
+node /managers/configuration-manager.js --reset
 ```
 # Printing Api #
 
