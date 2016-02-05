@@ -2,12 +2,8 @@
 process.env.NODE_ENV = 'test';
 
 const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
 const should = chai.should();
 const exec = require('child_process').exec;
-
-chai.use(chaiAsPromised);
-chai.use(require('chai-fs'));
 describe("Linux Dependencies", linux_dependencies_test);
 
 function linux_dependencies_test () {

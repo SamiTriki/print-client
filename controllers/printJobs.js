@@ -41,7 +41,7 @@ exports.printDelivery = (req, res, next) => {
         .then((croppedDocument) => {
             if (req.body.no_print) {res.send(200, path); next(); return;}
 
-            printer_manager.file(croppedDocument, 'label')
+            printer_manager.file(croppedDocument, 'delivery')
             .then(id => {
                 log(`Delivery file ${path} printing sent with job id ${id}`, __filename);
                 res.send(200, id);

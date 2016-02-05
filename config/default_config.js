@@ -5,7 +5,8 @@ module.exports = {
     },
     printers: {
         invoice: 'Brother-MFC-9460CDN',
-        label: 'intermec'
+        label: 'intermec',
+        delivery: 'intermec'
     },
     tempFiles: `${__dirname}/../tmp`,
     logs_path: `${__dirname}/../logs`
