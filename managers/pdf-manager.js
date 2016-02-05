@@ -48,6 +48,8 @@ exports.crop = (lptDocument) => {
         let rand = Math.floor(Math.random() * 99999999999);
         let delivery_uncropped = `${outputDir}/${rand}_chronopost.pdf`;
         let delivery_cropped = `${outputDir}/${rand}_cropped_chronopost.pdf`;
+
+        // write the pdf file to the tmp directory so pdfcrop can read it
         fs.writeFile(delivery_uncropped, lptDocument.file, (err) => {
             if (err) {
                 reject(`Could not write file from s3, ${err}`);
@@ -59,6 +61,7 @@ exports.crop = (lptDocument) => {
 
         function outputCropped (err, stdout) {
             if (!err && stdout.includes('written')) {
+                // read the pdf buffer to it's resolved as a lptDocument
                 fs.readFile(delivery_cropped, function (err, buffer) {
                     if (err) { reject(`Could not read stream from cropped chrono ${err}`); }
                     lptDocument.file = buffer;
