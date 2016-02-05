@@ -66,7 +66,8 @@ npm install
 # Check if all the tests pass prior to launching the server
 npm test
 # Then start the app
-node app.js
+# Note that pm2 launches the app and creates a startup script, so it's not necessary to relaunch the server when the machine reboots, you can check the status of the app using 'pm2 list'
+npm start
 ```
 add the following in a .env file at the folder root or in your environment variables
 

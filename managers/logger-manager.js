@@ -6,7 +6,7 @@ var moment = require('moment');
 
 exports.log = (logs, file, cb) => {
     fs.appendFile(logs_path,
-    `[${file}]: ${logs} | ${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')}\n`,
+    `${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')} | ${logs} [${file}]\n`,
     `utf-8`, (err) => {
         err && console.log(`LOGGER MANAGER ERROR ${err} in ${file}`);
         cb && cb();

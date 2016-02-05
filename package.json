@@ -4,7 +4,9 @@
   "description": "Printing server for LPT Store",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "posttest": "istanbul cover _mocha test/**/*.js",
+    "start": "sudo pm2 startup app.js && pm2 start ./app.js --name='lpt-print-client'"
   },
   "keywords": [
     "print",
@@ -25,6 +27,7 @@
     "mocha": "^2.4.5",
     "moment": "^2.11.1",
     "pdfkit": "^0.7.2",
+    "pm2": "^1.0.0",
     "printer": "^0.2.1",
     "rescode": "^0.1.10",
     "restify": "^4.0.3",
