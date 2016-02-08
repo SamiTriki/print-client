@@ -5,7 +5,7 @@
     "script"      : "/home/samitriki/lpt-print-client/app.js",
     "args"        : [""],
     "watch"       : true,
-    "ignore_watch": ["node_modules", "config", "logs"],
+    "ignore_watch": ["node_modules", "config", "logs", "coverage"],
     "node_args"   : "",
     "merge_logs"  : true,
     "cwd"         : "/home/samitriki/lpt-print-client"
