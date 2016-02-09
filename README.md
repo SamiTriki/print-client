@@ -76,12 +76,14 @@ GITHUB_BOT_PASS=LPT_SELF_UPDATE_PASSWORD
 ```bash
 # Then start the app
 # Note that pm2 launches the app and creates a startup script, so it's not necessary to relaunch the server when the machine reboots, you can check the status of the app using 'sudo pm2 list'
-#Launch the app through pm2 ecosystem.json, copy the sample file on your system, outside the directory, make sure it's the good path to the project folder
+#Launch the app through pm2 ecosystem.json, copy the sample file in the project directory
+cp sample_ecosystem.json ecosystem.json
+#make sure it's the good path to the project folder
 npm start
 ```
 If there is an error with pm2 while starting the app, try this command from the project directory:
 ```bash
-#it will reset the configuration for you in case any path changes
+#it will reset the configuration for you in case any path changes and on first install
 node /managers/configuration-manager.js reset
 ```
 :exclamation: Make sure the project is in a place where you have access rights to files !
