@@ -1,0 +1,12 @@
+{
+  "apps" : [{
+    // Client printer server
+    "name"        : "lpt-print-client",
+    "script"      : "/home/user/lpt-print-client/app.js",
+    "args"        : [""],
+    "watch"       : [".git"],
+    "node_args"   : "",
+    "merge_logs"  : true,
+    "cwd"         : "/home/user/lpt-print-client"
+  }]
+}

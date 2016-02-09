@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha",
     "posttest": "istanbul cover _mocha test/**/*.js",
-    "start": "sudo pm2 startup app.js && pm2 start ./app.js --name='lpt-print-client'"
+    "start": "sudo pm2 startup app.js && sudo pm2 startOrReload ecosystem.json"
   },
   "keywords": [
     "print",
