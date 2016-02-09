@@ -21,7 +21,7 @@ sudo apt-get install -y nodejs
 
 ## Install git, cups, apache2 and pdfcrop
 ```bash
-sudo apt-get install cups git libcups2-dev texlive-extra-utils automake make autoconf gcc g++ ghostscript poppler-utils netpbm
+sudo apt-get install cups git libcups2-dev texlive-extra-utils automake make autoconf gcc g++ ghostscript poppler-utils netpbm apache2-bin
 ```
 
 ## Clone the repository
