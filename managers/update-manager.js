@@ -1,13 +1,19 @@
 "use strict";
 var fs = require('fs');
 const log = require('./logger-manager').log;
-fs.writeFileSync(`${process.env.HOME}/.netrc`, `machine api.github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}
-    machine github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}`);
 
 var git = require('simple-git')( `${__dirname}/..` );
 
+function write_netrc() {
+    fs.writeFileSync(`${process.env.HOME}/.netrc`, `machine api.github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}
+            machine github.com\nlogin lpt-self-update\npassword ${process.env.GITHUB_BOT_PASS}`);
+}
+
+write_netrc();
+
 exports.latest = () => {
     return new Promise((resolve, reject) => {
+        write_netrc();
         git.pull(function(err, update) {
             if (err) {
                 log(`Error while fetching latest data from github`, __filename);
@@ -17,7 +23,6 @@ exports.latest = () => {
 
             if(update && update.summary.changes) {
                 updated = true;
-                // Program must be launched with pm2 which watches file changes and restarts the app, app should restart at this point
                 resolve(updated);
             } else {
                 updated = false;
@@ -29,6 +34,7 @@ exports.latest = () => {
 
 exports.getStatus = () => {
     return new Promise((resolve, reject) => {
+        write_netrc();
         git.log((err, logs) => {
             if (err) {
                 log(`Error while logging github info`, __filename);
@@ -54,7 +60,7 @@ exports.getStatus = () => {
 exports.check = () => {
     return new Promise((resolve, reject) => {
         try {
-
+            write_netrc();
             let checkStatus = () => {
                 exports.getStatus()
                 .then((status) => {
@@ -76,6 +82,7 @@ exports.check = () => {
 
 exports.history = () => {
     return new Promise((resolve, reject) => {
+        write_netrc();
         git.log((err, logs) => {
             if (err) {
                 log(`Error while logging github info`, __filename);

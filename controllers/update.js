@@ -8,6 +8,8 @@ exports.latest = (req, res, next) => {
         if (updated) {
             res.send(200, 'Sucessfully updated');
             next();
+            process.exit(0);
+
         } else {
             res.send(202, 'No updates available');
             next();
