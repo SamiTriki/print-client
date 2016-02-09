@@ -16,7 +16,7 @@ exports.latest = () => {
         write_netrc();
         git.pull(function(err, update) {
             if (err) {
-                log(`Error while fetching latest data from github`, __filename);
+                log(`Error while fetching latest data from github, ${err}`, __filename);
                 reject(err);
             }
             let updated;
@@ -37,7 +37,7 @@ exports.getStatus = () => {
         write_netrc();
         git.log((err, logs) => {
             if (err) {
-                log(`Error while logging github info`, __filename);
+                log(`Error while logging github info, ${err}`, __filename);
                 reject(err);
             }
 
