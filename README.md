@@ -11,6 +11,18 @@
 	- cups-dev : `sudo apt-get install libcups2-dev`
 	- pdfcrop (paquet linux) `sudo apt-get install texlive-extra-utils`
 
+## Install NodeJS
+
+```bash
+# Using Ubuntu
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+## Install git, cups, apache2 and pdfcrop
+```bash
+sudo apt-get install cups git libcups2-dev texlive-extra-utils 
+```
 
 **:exclamation: If you make a change on the server and push these from it, remember to delete the .netrc file that's used to self update the app with readonly rights on the repo which prevents you from pushing**
 
