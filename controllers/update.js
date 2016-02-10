@@ -2,7 +2,7 @@
 
 var update = require('../managers/update-manager.js');
 const exec = require('child_process').exec;
-const log = require('./logger-manager').log;
+const log = require('../managers/logger-manager').log;
 
 exports.latest = (req, res, next) => {
     update.latest()
