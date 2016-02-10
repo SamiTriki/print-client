@@ -1,6 +1,7 @@
 "use strict";
 
 const restify = require('restify');
+const bugsnag = require('bugsnag');
 const server = restify.createServer();
 const printJobs = require('./controllers/printJobs');
 const printInfos = require('./controllers/printInfos');
@@ -44,4 +45,5 @@ module.exports = () => {
         console.log(`${server.name} running on ${server.url}`);
     });
 
+    server.on("uncaughtException", bugsnag.restifyHandler);
 };
