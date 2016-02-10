@@ -1,7 +1,6 @@
 "use strict";
 
 var config_file_path = `${__dirname}/../config/config.json`;
-const default_config = require('../config/default_config');
 
 var fs = require('fs');
 
@@ -26,6 +25,7 @@ exports.replace = (newConfig, cb) => {
 };
 
 exports.get = (cb) => {
+    let default_config = require('../config/default_config');
     try {
         fs.readFile(config_file_path, 'utf-8', (err, file) => {
             if (err) { throw new Error(`Failed to read config file, ${err}`); }
@@ -40,6 +40,8 @@ exports.get = (cb) => {
 };
 
 exports.getSync = () => {
+    let default_config = require('../config/default_config');
+
     try {
         return JSON.parse(fs.readFileSync(config_file_path));
     } catch (e) {
@@ -49,6 +51,7 @@ exports.getSync = () => {
 };
 
 exports.reset = (cb) => {
+    let default_config = require('../config/default_config');
     try {
         exports.replace(default_config, () => cb && cb(null, default_config));
     } catch (e) {

@@ -9,5 +9,6 @@ module.exports = {
         delivery: 'intermec'
     },
     tempFiles: `${__dirname}/../tmp`,
-    logs_path: `${__dirname}/../logs`
+    logs_path: `${__dirname}/../logs`,
+    working_directory: `${__dirname}/..`
 };

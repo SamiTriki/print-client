@@ -1,14 +1,22 @@
 "use strict";
 
 var update = require('../managers/update-manager.js');
+const exec = require('child_process').exec;
 
 exports.latest = (req, res, next) => {
     update.latest()
     .then((updated) => {
         if (updated) {
+            const working_directory = require('../managers/configuration-manager').getSync().working_directory;
             res.send(200, 'Sucessfully updated');
-            next();
-            process.exit(0);
+            exec(`cd ${working_directory} && npm start`, (err, stdout, stderr) => {
+                if (err || stderr) {
+                    let msg = err || stderr;
+                    next(msg);
+                } else {
+                    next();
+                }
+            });
 
         } else {
             res.send(202, 'No updates available');
