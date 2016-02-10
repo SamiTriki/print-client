@@ -32,7 +32,5 @@
     "rescode": "^0.1.10",
     "restify": "^4.0.3",
     "simple-git": "^1.21.0",
-    "satellizer": "^0.12.1"
-
   }
 }
