@@ -15,6 +15,11 @@ module.exports = () => {
     server.pre(restify.pre.sanitizePath());
     server.pre(restify.CORS());
 
+    server.pre(function (request, response, next) {
+        logs.logRequest({ req: request }, __filename);
+        next();
+    });
+
     // print
     server.post("/print/document", printJobs.printFile);
     server.post("/print/delivery", printJobs.printDelivery);

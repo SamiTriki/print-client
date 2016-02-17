@@ -2,10 +2,21 @@
 const fs = require('fs');
 var config = require('./configuration-manager').getSync();
 var logs_path = `${config.logs_path}/logs.log`;
+var requests_path = `${config.logs_path}/requests_logs.log`;
+
 var moment = require('moment');
 
 exports.log = (logs, file, cb) => {
     fs.appendFile(logs_path,
+    `${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')} | ${logs} [${file}]\n`,
+    `utf-8`, (err) => {
+        err && console.log(`LOGGER MANAGER ERROR ${err} in ${file}`);
+        cb && cb();
+    });
+};
+
+exports.logRequest = (logs, file, cb) => {
+    fs.appendFile(requests_path,
     `${moment().locale('fr').format('DD/MM/YYYY, HH:mm:ss')} | ${logs} [${file}]\n`,
     `utf-8`, (err) => {
         err && console.log(`LOGGER MANAGER ERROR ${err} in ${file}`);
