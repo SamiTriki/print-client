@@ -15,7 +15,8 @@ var api = api || {};
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
         }))
-        .then(() => alertify.success('Impression lancée'));
+        .then(() => alertify.success('Impression lancée'))
+        .catch((e) => alertify.error('Promblème d\'impression:', e.message));
     };
 
     api.print.not_certified_label = function () {
@@ -28,7 +29,8 @@ var api = api || {};
             manufacturing: 'Atelier Paris',
             destination: 'Magasin Paris'
         }))
-        .then(() => alertify.success('Impression lancée'));
+        .then(() => alertify.success('Impression lancée'))
+        .catch((e) => alertify.error('Promblème d\'impression:', e.message));
     };
 
     api.update.version = function () {
@@ -120,7 +122,7 @@ var api = api || {};
             if (response.status >= 200 && response.status < 300) {
                 return Promise.resolve(response);
             } else {
-                var error = new Error(response.statusText || response.status);
+                var error = new Error(response.statusText || response.status || response.message);
                 error.response = response;
                 return Promise.reject(error);
             }

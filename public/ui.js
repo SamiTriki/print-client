@@ -9,6 +9,8 @@ var ui = ui || {};
     ui.btn_logs_bottom = document.getElementById('scroll-logs');
     ui.input_label_printer = document.getElementById('config-label');
     ui.input_invoice_printer = document.getElementById('config-invoice');
+    ui.input_delivery_printer = document.getElementById('config-delivery');
+
     ui.printers_list = document.getElementById('printers-list');
     ui.logs = document.getElementById('logs');
 
@@ -36,6 +38,7 @@ var ui = ui || {};
     ui.setInputValues = function () {
         conf.current.printers.label = ui.input_label_printer.value;
         conf.current.printers.invoice = ui.input_invoice_printer.value;
+        conf.current.printers.delivery = ui.input_delivery_printer.value;
     };
 
     ui.formatLogs = (logs) => {
