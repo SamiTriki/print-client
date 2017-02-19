@@ -14,7 +14,7 @@
     "lpt",
     "node"
   ],
-  "author": "Lunettes pour tous",
+  "author": "Sami Triki",
   "license": "UNLICENSED",
   "dependencies": {
     "aws-sdk": "^2.2.30",
